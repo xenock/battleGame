@@ -21,6 +21,9 @@ describe('Unit', function(){
     it('should have a movement function', function(){
       expect(typeof(unit.canMove)).toBe('function')
     })
+    it('should have a move function', function(){
+      expect(typeof(unit.move)).toBe('function')
+    })
   })
 
   describe('Functions behaviour', function(){
@@ -43,6 +46,12 @@ describe('Unit', function(){
       it('should not permit to move more than its movement', function(){
         movement = 2
         expect(unit.canMove(position.x+2, position.y+2) <= movement).toBe(false)
+      })
+    })
+    describe('move', function(){
+      it('should move to the designed position', function(){
+        var finalPosition = {x: 11, y: 11}
+        expect(unit.move(11,11)).toEqual(finalPosition)
       })
     })
   })

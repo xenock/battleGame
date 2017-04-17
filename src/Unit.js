@@ -17,3 +17,9 @@ Unit.prototype.receiveDamage = function(damage){
 Unit.prototype.canMove = function(x, y){
   return Math.abs(x - this.position.x) + Math.abs(y - this.position.y)
 }
+
+Unit.prototype.move = function(x, y){
+  this.position.x = x
+  this.position.y = y
+  return this.position
+}
