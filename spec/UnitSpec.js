@@ -24,6 +24,15 @@ describe('Unit', function(){
       unit = new Unit(50, 10)
       expect(unit.defense).toBe(undefined)
     })
+    it('should have a position object attribute', function(){
+      var position = {x: 10, y: 10}
+      expect(position).toBeDefined()
+      unit = new Unit(50, 10, 5, position)
+      expect(unit.position).not.toBe(undefined)
+
+      unit = new Unit(50, 10, 5)
+      expect(unit.position).toBe(undefined)
+    })
   })
   describe('Functions', function(){
     it('should have an attack function', function(){
@@ -34,5 +43,12 @@ describe('Unit', function(){
     })
   })
   describe('Default attributes values', function(){})
-  describe('Functions behaviour', function(){})
+  describe('Functions behaviour', function(){
+    describe('attack', function(){
+      it('should return power attribute', function(){
+        unit = new Unit(50, 10, 5, {x:10, y:10})
+        expect(unit.attack()).toEqual(10)
+      })
+    })
+  })
 })
