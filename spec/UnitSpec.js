@@ -12,6 +12,12 @@ describe('Unit', function(){
       unit = new Unit()
       expect(unit.health).toBe(undefined)
     })
+    it('should have a power number attribute', function(){
+      unit = new Unit(50, 10)
+      expect(unit.power).not.toBe(undefined)
+      unit = new Unit(50)
+      expect(unit.power).toBe(undefined)
+    })
   })
   describe('Functions', function(){
     it('should have an attack function', function(){
