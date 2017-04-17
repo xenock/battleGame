@@ -9,4 +9,6 @@ Unit.prototype.attack = function(){
   return this.power
 }
 
-Unit.prototype.receiveDamage = function(){}
+Unit.prototype.receiveDamage = function(damage){
+  return this.health -= damage - this.defense
+}
