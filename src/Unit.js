@@ -3,3 +3,5 @@ function Unit(health){
 }
 
 Unit.prototype.attack = function(){}
+
+Unit.prototype.receiveDamage = function(){}

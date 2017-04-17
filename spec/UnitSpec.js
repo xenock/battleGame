@@ -17,6 +17,9 @@ describe('Unit', function(){
     it('should have an attack function', function(){
       expect(typeof(unit.attack)).toBe('function')
     })
+    it('should have a receive damage function', function(){
+      expect(typeof(unit.receiveDamage)).toBe('function')
+    })
   })
   describe('Default attributes values', function(){})
   describe('Functions behaviour', function(){})
