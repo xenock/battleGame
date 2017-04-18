@@ -4,10 +4,7 @@ function initialBoard(width, height){
   return Array.apply(null, Array(width)).map(e => Array(height))
 }
 
-$(document).ready(function(){
-  var body = $('body')
-  board = initialBoard(10, 20)
-
+function paintBoard(board, body){
   board.forEach(function(rowArray){
     var row = $('<div>').addClass('row')
 
@@ -17,5 +14,11 @@ $(document).ready(function(){
     }
     body.append(row)
   })
+}
 
+$(document).ready(function(){
+  var body = $('body')
+  board = initialBoard(10, 20)
+  paintBoard(board, body)
+  
 })
