@@ -1,5 +1,5 @@
 var board
-var unit = new Unit(10, 10, 5, {x: 5, y: 5}, 2)
+var unit = new Unit(10, 10, 5, {x: 5, y: 5}, 2, 'soldier')
 
 function initialBoard(width, height){
   return Array.apply(null, Array(width)).map(e => Array(height))
@@ -21,6 +21,6 @@ $(document).ready(function(){
   var body = $('body')
   board = initialBoard(10, 20)
   paintBoard(board, body)
-  $('.x'+unit.position.x+'y'+unit.position.y).css('background', 'red')
+  $('.x'+unit.position.x+'y'+unit.position.y).css('background', 'red').data('type', unit.type).on('click', function(){ console.log(unit.type)})
 
 })
