@@ -10,7 +10,7 @@ function paintBoard(board, body){
     var row = $('<div>').addClass('row')
 
     for(var y=0; y<rowArray.length; y++){
-      var column = $('<div>').addClass('cell r'+x+'c'+y)
+      var column = $('<div>').addClass('cell x'+x+'y'+y)
       row.append(column)
     }
     body.append(row)
@@ -21,6 +21,6 @@ $(document).ready(function(){
   var body = $('body')
   board = initialBoard(10, 20)
   paintBoard(board, body)
-  $('.r'+unit.position.x+'c'+unit.position.y).css('background', 'red')
+  $('.x'+unit.position.x+'y'+unit.position.y).css('background', 'red')
 
 })
