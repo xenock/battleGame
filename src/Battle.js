@@ -1,3 +1,5 @@
-function Battle(){
+var board
+
+$(document).ready(function(){
   
-}
+})
