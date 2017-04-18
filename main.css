@@ -2,7 +2,7 @@ body {
   background: cadetblue;
 }
 
-.row .column {
+.row .cell {
   background: aquamarine;
 }
 
@@ -10,7 +10,7 @@ body {
   height: 50px;
 }
 
-.column {
+.cell {
   height: 50px;
   width: 50px;
   display: inline-block;
