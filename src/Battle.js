@@ -6,11 +6,11 @@ function initialBoard(width, height){
 }
 
 function paintBoard(board, body){
-  board.forEach(function(rowArray, xIndex){
+  board.forEach(function(rowArray, x){
     var row = $('<div>').addClass('row')
 
-    for(var i=0; i<rowArray.length; i++){
-      var column = $('<div>').addClass('cell r'+xIndex+'c'+i)
+    for(var y=0; y<rowArray.length; y++){
+      var column = $('<div>').addClass('cell r'+x+'c'+y)
       row.append(column)
     }
     body.append(row)
