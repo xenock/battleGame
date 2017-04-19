@@ -1,11 +1,18 @@
-function Unit(health, power, defense, position, movement, type){
+function Unit(health, power, defense, position, movement, range, type){
   this.health = health
   this.power = power
   this.defense = defense
   this.position = position
   this.movement = movement
+  this.range = range
   this.type = type
 }
+
+Unit.prototype.canAttack = function(x, y){
+  return (Math.abs(x - this.position.x) + Math.abs(y - this.position.y) <= this.range)
+}
+
+
 
 Unit.prototype.attack = function(){
   return this.power

@@ -1,6 +1,6 @@
 describe('Unit', function(){
   var unit
-  var health, power, defense, position, movement
+  var health, power, defense, position, movement, range
 
   beforeEach(function(){
     health = Math.floor((Math.random()*10 )+1)
@@ -8,10 +8,14 @@ describe('Unit', function(){
     defense = Math.floor((Math.random()*10 )+1)
     position = {x:10, y:10}
     movement = Math.floor((Math.random()*2 )+1)
-    unit = new Unit(health, power, defense, position, movement)
+    range = Math.floor((Math.random()*2)+1)
+    unit = new Unit(health, power, defense, position, movement, range)
   })
 
   describe('Functions', function(){
+    it('should have a canAttack function', function(){
+      expect(typeof(unit.canAttack)).toBe('function')
+    })
     it('should have an attack function', function(){
       expect(typeof(unit.attack)).toBe('function')
     })
@@ -27,6 +31,17 @@ describe('Unit', function(){
   })
 
   describe('Functions behaviour', function(){
+    describe('canAttack', function(){
+      it('should permit to attack less or equal than its range', function(){
+        unit.range = 2
+        expect(unit.canAttack(unit.position.x+1, unit.position.y+1)).toBe(true)
+      })
+      it('should not permit to attack more than its range', function(){
+        unit.range = 2
+        expect(unit.canAttack(unit.position.x+2, unit.position.y+2)).toBe(false)
+      })
+    })
+
     describe('attack', function(){
       it('should return power attribute', function(){
         expect(unit.attack()).toEqual(power)
