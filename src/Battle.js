@@ -47,8 +47,10 @@ $(document).ready(function(){
     console.log(selectedCell) //info consola
     if(actions.length == 2){
       if(actions[0].type && actions[1]){
-        moveUnit(unit, actions)
-        actions = []
+        if(unit.canMove(actions[1].x, actions[1].y)){
+          moveUnit(unit, actions)
+          actions = []
+        }
       }
 
       actions.shift()
