@@ -27,7 +27,6 @@ function removeLastPosition(unit){
 }
 
 function moveUnit(unit, actions){
-  console.log(actions)
   removeLastPosition(unit)
   unit.move(actions[1].x, actions[1].y)
   putUnitInMap(unit)
@@ -36,10 +35,8 @@ function moveUnit(unit, actions){
 function attackEnemy(unit, actions, enemy){
   if(unit.canAttack(actions[1].x, actions[1].y)){
     enemy.receiveDamage(unit.attack())
-    if(enemy.isDead()){
+    if(enemy.isDead())
       removeLastPosition(enemy)
-    }
-    console.log(enemy.health)
   }
 }
 
