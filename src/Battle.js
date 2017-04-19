@@ -18,17 +18,30 @@ function putUnitInMap(unit){
   $('.x'+unit.position.x+'y'+unit.position.y)
     .css('background', 'red')
     .data('type', unit.type)
-    // .on('click', function(){ console.log(unit.type)})
 }
 
 $(document).ready(function(){
   var body = $('body')
-  board = initialBoard(10, 20)
+  board = initialBoard(10, 10)
+
   paintBoard(board, body)
   putUnitInMap(unit)
+  var actions = []
+
   var cell = $('.cell')
   cell.on('click', function(c){
-    console.log($(this).data())
+    var selectedCell = $(this).data()
+    actions.push(selectedCell)
+    console.log(selectedCell) //info consola
+    if(actions.length == 2){
+      if(actions[0].type && actions[1]){
+        unit.move(actions[1].x, actions[1].y)
+        putUnitInMap(unit)
+        actions = []
+      }
+
+      actions.shift()
+    }
   })
 
 })
