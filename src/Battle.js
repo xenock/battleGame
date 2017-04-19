@@ -23,7 +23,7 @@ function putUnitInMap(unit){
 }
 
 function removeLastPosition(unit){
-  $('.x'+unit.position.x+'y'+unit.position.y).removeClass('team_one team_two')
+  $('.x'+unit.position.x+'y'+unit.position.y).removeClass('team_one team_two').removeData('type')
 }
 
 function moveUnit(unit, actions){
@@ -48,9 +48,12 @@ $(document).ready(function(){
     actions.push(selectedCell)
     console.log(selectedCell) //info consola
     if(actions.length == 2){
-      if(actions[0].type && actions[1]){
-        if(actions[0].type && actions[1].type){
+      if(actions[0].type && actions[1]){ //primero es soldado
+        if(actions[0].type && actions[1].type){ //ambos soldados
           enemy.receiveDamage(unit.attack())
+          if(enemy.isDead()){
+            removeLastPosition(enemy)
+          }
           console.log(enemy.health)
           actions = []
         } else if(unit.canMove(actions[1].x, actions[1].y)){
