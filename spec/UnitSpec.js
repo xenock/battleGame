@@ -8,7 +8,7 @@ describe('Unit', function(){
     defense = Math.floor((Math.random()*10 )+1)
     position = {x:10, y:10}
     movement = Math.floor((Math.random()*2 )+1)
-    unit = new Unit(health, power, defense, position)
+    unit = new Unit(health, power, defense, position, movement)
   })
 
   describe('Functions', function(){
@@ -40,12 +40,12 @@ describe('Unit', function(){
     })
     describe('canMove', function(){
       it('should permit to move less or equal than its movement', function(){
-        movement = 2
-        expect(unit.canMove(position.x+1, position.y+1) <= movement).toBe(true)
+        unit.movement = 2
+        expect(unit.canMove(unit.position.x+1, unit.position.y+1)).toBe(true)
       })
       it('should not permit to move more than its movement', function(){
-        movement = 2
-        expect(unit.canMove(position.x+2, position.y+2) <= movement).toBe(false)
+        unit.movement = 2
+        expect(unit.canMove(unit.position.x+2, unit.position.y+2)).toBe(false)
       })
     })
     describe('move', function(){
