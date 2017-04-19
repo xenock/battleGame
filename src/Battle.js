@@ -50,16 +50,15 @@ $(document).ready(function(){
     if(actions.length == 2){
       if(actions[0].type && actions[1]){
         if(actions[0].type && actions[1].type){
-          console.log('attacking')
-        }else if(unit.canMove(actions[1].x, actions[1].y)){
+          enemy.receiveDamage(unit.attack())
+          console.log(enemy.health)
+          actions = []
+        } else if(unit.canMove(actions[1].x, actions[1].y)){
           moveUnit(unit, actions)
           actions = []
         }
       }
-
-
       actions.shift()
     }
   })
-
 })
