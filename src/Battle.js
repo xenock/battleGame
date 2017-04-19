@@ -33,6 +33,16 @@ function moveUnit(unit, actions){
   putUnitInMap(unit)
 }
 
+function attackEnemy(unit, actions, enemy){
+  if(unit.canAttack(actions[1].x, actions[1].y)){
+    enemy.receiveDamage(unit.attack())
+    if(enemy.isDead()){
+      removeLastPosition(enemy)
+    }
+    console.log(enemy.health)
+  }
+}
+
 $(document).ready(function(){
   var body = $('body')
   board = initialBoard(10, 10)
@@ -50,13 +60,7 @@ $(document).ready(function(){
     if(actions.length == 2){
       if(actions[0].type && actions[1]){ //primero es soldado
         if(actions[0].type && actions[1].type){ //ambos soldados
-          if(unit.canAttack(actions[1].x, actions[1].y)){
-            enemy.receiveDamage(unit.attack())
-            if(enemy.isDead()){
-              removeLastPosition(enemy)
-            }
-            console.log(enemy.health)
-          }
+          attackEnemy(unit, actions, enemy)
           actions = []
         } else if(unit.canMove(actions[1].x, actions[1].y)){
           moveUnit(unit, actions)
