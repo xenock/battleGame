@@ -14,10 +14,22 @@ function paintBoard(board, body){
     body.append(row)
   })
 }
+
 function putUnitInMap(unit){
   $('.x'+unit.position.x+'y'+unit.position.y)
-    .css('background', 'red')
+    .addClass('soldier')
     .data('type', unit.type)
+}
+
+function removeLastPosition(unit){
+  $('.x'+unit.position.x+'y'+unit.position.y).removeClass('soldier')
+}
+
+function moveUnit(unit, actions){
+  console.log(actions)
+  removeLastPosition(unit)
+  unit.move(actions[1].x, actions[1].y)
+  putUnitInMap(unit)
 }
 
 $(document).ready(function(){
@@ -35,8 +47,7 @@ $(document).ready(function(){
     console.log(selectedCell) //info consola
     if(actions.length == 2){
       if(actions[0].type && actions[1]){
-        unit.move(actions[1].x, actions[1].y)
-        putUnitInMap(unit)
+        moveUnit(unit, actions)
         actions = []
       }
 
