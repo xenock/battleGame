@@ -50,11 +50,13 @@ $(document).ready(function(){
     if(actions.length == 2){
       if(actions[0].type && actions[1]){ //primero es soldado
         if(actions[0].type && actions[1].type){ //ambos soldados
-          enemy.receiveDamage(unit.attack())
-          if(enemy.isDead()){
-            removeLastPosition(enemy)
+          if(unit.canAttack(actions[1].x, actions[1].y)){
+            enemy.receiveDamage(unit.attack())
+            if(enemy.isDead()){
+              removeLastPosition(enemy)
+            }
+            console.log(enemy.health)
           }
-          console.log(enemy.health)
           actions = []
         } else if(unit.canMove(actions[1].x, actions[1].y)){
           moveUnit(unit, actions)
