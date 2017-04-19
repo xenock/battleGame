@@ -1,5 +1,6 @@
 var board
-var unit = new Unit(10, 10, 5, {x: 5, y: 5}, 2, 'soldier')
+var unit = new Unit(10, 10, 5, {x: 5, y: 5}, 2, 'team_one')
+var enemy = new Unit(10, 10, 5, {x: 8, y: 8}, 2, 'team_two')
 
 function initialBoard(width, height){
   return Array.apply(null, Array(width)).map(e => Array(height))
@@ -17,12 +18,12 @@ function paintBoard(board, body){
 
 function putUnitInMap(unit){
   $('.x'+unit.position.x+'y'+unit.position.y)
-    .addClass('soldier')
+    .addClass(unit.type)
     .data('type', unit.type)
 }
 
 function removeLastPosition(unit){
-  $('.x'+unit.position.x+'y'+unit.position.y).removeClass('soldier')
+  $('.x'+unit.position.x+'y'+unit.position.y).removeClass('team_one team_two')
 }
 
 function moveUnit(unit, actions){
@@ -38,6 +39,7 @@ $(document).ready(function(){
 
   paintBoard(board, body)
   putUnitInMap(unit)
+  putUnitInMap(enemy)
   var actions = []
 
   var cell = $('.cell')
@@ -47,11 +49,14 @@ $(document).ready(function(){
     console.log(selectedCell) //info consola
     if(actions.length == 2){
       if(actions[0].type && actions[1]){
-        if(unit.canMove(actions[1].x, actions[1].y)){
+        if(actions[0].type && actions[1].type){
+          console.log('attacking')
+        }else if(unit.canMove(actions[1].x, actions[1].y)){
           moveUnit(unit, actions)
           actions = []
         }
       }
+
 
       actions.shift()
     }

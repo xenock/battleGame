@@ -17,6 +17,10 @@ body {
   border: 1px solid black;
 }
 
-.soldier {
-  background: red
+.team_one {
+  background: red;
+}
+
+.team_two {
+  background: yellow;
 }
