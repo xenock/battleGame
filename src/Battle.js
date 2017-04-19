@@ -1,6 +1,6 @@
 var board
-var unit = new Unit(10, 10, 5, {x: 5, y: 5}, 2, 'team_one')
-var enemy = new Unit(10, 10, 5, {x: 8, y: 8}, 2, 'team_two')
+var unit = new Unit(10, 10, 5, {x: 5, y: 5}, 2, 2,'team_one')
+var enemy = new Unit(10, 10, 5, {x: 8, y: 8}, 2, 2,'team_two')
 
 function initialBoard(width, height){
   return Array.apply(null, Array(width)).map(e => Array(height))

@@ -22,6 +22,9 @@ describe('Unit', function(){
     it('should have a receive damage function', function(){
       expect(typeof(unit.receiveDamage)).toBe('function')
     })
+    it('should have a isDead function', function(){
+      expect(typeof(unit.isDead)).toBe('function')
+    })
     it('should have a movement function', function(){
       expect(typeof(unit.canMove)).toBe('function')
     })
@@ -41,7 +44,12 @@ describe('Unit', function(){
         expect(unit.canAttack(unit.position.x+2, unit.position.y+2)).toBe(false)
       })
     })
-
+    describe('isDead', function(){
+      it('should return if unit is dead', function(){
+        unit.health = 0
+        expect(unit.health <= 0).toBe(true)
+      })
+    })
     describe('attack', function(){
       it('should return power attribute', function(){
         expect(unit.attack()).toEqual(power)

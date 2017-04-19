@@ -12,14 +12,16 @@ Unit.prototype.canAttack = function(x, y){
   return (Math.abs(x - this.position.x) + Math.abs(y - this.position.y) <= this.range)
 }
 
-
-
 Unit.prototype.attack = function(){
   return this.power
 }
 
 Unit.prototype.receiveDamage = function(damage){
   return this.health -= damage - this.defense
+}
+
+Unit.prototype.isDead = function(){
+  return this.health <= 0
 }
 
 Unit.prototype.canMove = function(x, y){
