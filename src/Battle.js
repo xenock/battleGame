@@ -41,11 +41,13 @@ function moveUnit(unit, actions){
   putUnitInMap(unit)
 }
 
-function attackEnemy(unit, actions, enemy){
+function attackEnemy(unit, actions, enemy, enemySquad){
   if(unit.canAttack(actions[1].x, actions[1].y)){
     enemy.receiveDamage(unit.attack())
-    if(enemy.isDead())
+    if(enemy.isDead()){
       removeLastPosition(enemy)
+      enemySquad.splice(enemySquad.indexOf(enemy),1)
+    }
   }
 }
 
@@ -58,6 +60,7 @@ $(document).ready(function(){
   teamTwo.forEach(unit => {putUnitInMap(unit)})
 
   var actions = []
+  var moves = 0, shoots = 0
   var turn = 'team_one'
   var goodSquad = teamOne.concat(teamTwo).filter(u => {return u.type == turn})
   var enemySquad = teamOne.concat(teamTwo).filter(u => {return u.type != turn})
@@ -72,16 +75,23 @@ $(document).ready(function(){
       if(actions[0].type == turn && actions[1]){
         var unit = goodSquad.find(u => {return u.name == actions[0].name})
 
-        if(actions[0].type == turn && actions[1].type != turn && actions[1].type != undefined){
+        if(actions[0].type == turn
+           && actions[1].type != turn
+           && actions[1].type != undefined
+           && shoots<2){
           var enemy = enemySquad.find(u => {return u.name == actions[1].name})
-          attackEnemy(unit, actions, enemy)
+          attackEnemy(unit, actions, enemy, enemySquad)
+          shoots += 1
           actions = []
-        } else if(unit.canMove(actions[1].x, actions[1].y)){
+        } else if(unit.canMove(actions[1].x, actions[1].y)
+                  && actions[1].type == undefined){
           moveUnit(unit, actions)
+          moves += 1
           actions = []
         }
       }
       actions.shift()
     }
+    //if
   })
 })
