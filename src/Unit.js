@@ -1,4 +1,4 @@
-function Unit(health, power, defense, position, movement, range, type){
+function Unit(health, power, defense, position, movement, range, type, name){
   this.health = health
   this.power = power
   this.defense = defense
@@ -6,6 +6,7 @@ function Unit(health, power, defense, position, movement, range, type){
   this.movement = movement
   this.range = range
   this.type = type
+  this.name = name
 }
 
 Unit.prototype.canAttack = function(x, y){

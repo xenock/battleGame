@@ -1,6 +1,15 @@
 var board
-var unit = new Unit(10, 10, 5, {x: 5, y: 5}, 2, 2,'team_one')
-var enemy = new Unit(10, 10, 5, {x: 8, y: 8}, 2, 2,'team_two')
+var teamSize = 4
+var boardSize = {
+  width: 10,
+  height: 10
+}
+var teamOne = new Array(teamSize)
+var teamTwo = new Array(teamSize)
+for(var i=0; i<teamSize; i++){
+  teamOne.push(new Unit(10, 10, 5, {x: 0, y: i+2}, 2, 2,'team_one', 'soldier'+i))
+  teamTwo.push(new Unit(10, 10, 5, {x: 9, y: i+2}, 2, 2,'team_two', 'soldier'+i))
+}
 
 function initialBoard(width, height){
   return Array.apply(null, Array(width)).map(e => Array(height))
@@ -19,11 +28,11 @@ function paintBoard(board, body){
 function putUnitInMap(unit){
   $('.x'+unit.position.x+'y'+unit.position.y)
     .addClass(unit.type)
-    .data('type', unit.type)
+    .data({'type': unit.type, 'name': unit.name})
 }
 
 function removeLastPosition(unit){
-  $('.x'+unit.position.x+'y'+unit.position.y).removeClass('team_one team_two').removeData('type')
+  $('.x'+unit.position.x+'y'+unit.position.y).removeClass('team_one team_two').removeData('type','name')
 }
 
 function moveUnit(unit, actions){
@@ -42,21 +51,29 @@ function attackEnemy(unit, actions, enemy){
 
 $(document).ready(function(){
   var body = $('body')
-  board = initialBoard(10, 10)
+  board = initialBoard(boardSize.width, boardSize.height)
 
   paintBoard(board, body)
-  putUnitInMap(unit)
-  putUnitInMap(enemy)
+  teamOne.forEach(unit => {putUnitInMap(unit)})
+  teamTwo.forEach(unit => {putUnitInMap(unit)})
+
   var actions = []
+  var turn = 'team_one'
+  var goodSquad = teamOne.concat(teamTwo).filter(u => {return u.type == turn})
+  var enemySquad = teamOne.concat(teamTwo).filter(u => {return u.type != turn})
 
   var cell = $('.cell')
   cell.on('click', function(c){
     var selectedCell = $(this).data()
     actions.push(selectedCell)
-    console.log(selectedCell) //info consola
+    console.log(selectedCell)
+
     if(actions.length == 2){
-      if(actions[0].type && actions[1]){ //primero es soldado
-        if(actions[0].type && actions[1].type){ //ambos soldados
+      if(actions[0].type == turn && actions[1]){
+        var unit = goodSquad.find(u => {return u.name == actions[0].name})
+
+        if(actions[0].type == turn && actions[1].type != turn && actions[1].type != undefined){
+          var enemy = enemySquad.find(u => {return u.name == actions[1].name})
           attackEnemy(unit, actions, enemy)
           actions = []
         } else if(unit.canMove(actions[1].x, actions[1].y)){
