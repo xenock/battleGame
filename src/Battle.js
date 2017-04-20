@@ -69,7 +69,7 @@ $(document).ready(function(){
   cell.on('click', function(c){
     var selectedCell = $(this).data()
     actions.push(selectedCell)
-    console.log(selectedCell)
+    // console.log(selectedCell)
 
     if(actions.length == 2){
       if(actions[0].type == turn && actions[1]){
@@ -92,6 +92,14 @@ $(document).ready(function(){
       }
       actions.shift()
     }
-    //if
+    console.log('movimientos restantes:'+(2-moves))
+    console.log('tiros restantes:'+(2-shoots))
+    if(shoots==2 || moves==2){
+      turn = (turn=='team_one')?turn='team_two':turn='team_one'
+      shoots = 0
+      moves = 0
+      goodSquad = teamOne.concat(teamTwo).filter(u => {return u.type == turn})
+      enemySquad = teamOne.concat(teamTwo).filter(u => {return u.type != turn})
+    }
   })
 })
