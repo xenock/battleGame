@@ -64,10 +64,15 @@ function updateCounters(moves, shoots, remainingActions){
   $('.shoots').html('disparos restantes'+(shoots))
 }
 
-function animateShot(unit){
-  var cell = $('.x'+unit.position.x+'y'+unit.position.y)
-  cell.addClass('attack')
-  setTimeout(t => {cell.removeClass('attack')}, 500)
+function animateShot(unit, enemy){
+  var unitCell = $('.x'+unit.position.x+'y'+unit.position.y)
+  var enemyCell = $('.x'+enemy.position.x+'y'+enemy.position.y)
+  unitCell.addClass('attack')
+  enemyCell.addClass('spin')
+  setTimeout(t => {
+    unitCell.removeClass('attack')
+    enemyCell.removeClass('spin')
+  }, 500)
 }
 
 $(document).ready(function(){
@@ -102,7 +107,7 @@ $(document).ready(function(){
           var enemy = enemySquad.find(u => {return u.name == actions[1].name})
           attackEnemy(unit, actions, enemy, enemySquad)
 
-          animateShot(unit)
+          animateShot(unit, enemy)
 
           shoots -= 1
           remainingActions -= 1

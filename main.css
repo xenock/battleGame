@@ -24,11 +24,19 @@ section{
   background-image: url('images/stand_shot.gif')
 }
 
+.team_one.spin {
+  background-image: url('images/spin.gif')
+}
+
 .team_two {
   background-image: url('images/idle_flop.gif');
 }
 
 .team_two.attack {
   background-image: url('images/stand_shot_flop.gif')
+}
+
+.team_two.spin {
+  background-image: url('images/spin_flop.gif')
 }
 
