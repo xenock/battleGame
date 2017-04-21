@@ -51,19 +51,30 @@ function attackEnemy(unit, actions, enemy, enemySquad){
   }
 }
 
+function initializeCounters(body, moves, shoots){
+  body.append($('<div>').addClass('moves').html('movimientos restantes'+(moves)))
+  body.append($('<div>').addClass('shoots').html('disparos restantes'+(shoots)))
+}
+
+function updateCounters(moves, shoots){
+  $('.moves').html('movimientos restantes'+(moves))
+  $('.shoots').html('disparos restantes'+(shoots))
+}
+
 $(document).ready(function(){
   var body = $('body')
   board = initialBoard(boardSize.width, boardSize.height)
-
   paintBoard(board, body)
-  teamOne.forEach(unit => {putUnitInMap(unit)})
-  teamTwo.forEach(unit => {putUnitInMap(unit)})
 
   var actions = []
-  var moves = 0, shoots = 0
+  var moves = 2, shoots = 2
   var turn = 'team_one'
   var goodSquad = teamOne.concat(teamTwo).filter(u => {return u.type == turn})
   var enemySquad = teamOne.concat(teamTwo).filter(u => {return u.type != turn})
+
+  teamOne.forEach(unit => {putUnitInMap(unit)})
+  teamTwo.forEach(unit => {putUnitInMap(unit)})
+  initializeCounters(body, moves, shoots)
 
   var cell = $('.cell')
   cell.on('click', function(c){
@@ -78,26 +89,27 @@ $(document).ready(function(){
         if(actions[0].type == turn
            && actions[1].type != turn
            && actions[1].type != undefined
-           && shoots<2){
+           && shoots>0){
           var enemy = enemySquad.find(u => {return u.name == actions[1].name})
           attackEnemy(unit, actions, enemy, enemySquad)
-          shoots += 1
+          shoots -= 1
+          updateCounters(moves, shoots)
           actions = []
         } else if(unit.canMove(actions[1].x, actions[1].y)
                   && actions[1].type == undefined){
           moveUnit(unit, actions)
-          moves += 1
+          moves -= 1
+          updateCounters(moves, shoots)
           actions = []
         }
       }
       actions.shift()
     }
-    console.log('movimientos restantes:'+(2-moves))
-    console.log('tiros restantes:'+(2-shoots))
-    if(shoots==2 || moves==2){
+    if(shoots==0 || moves==0){
       turn = (turn=='team_one')?turn='team_two':turn='team_one'
-      shoots = 0
-      moves = 0
+      shoots = 2
+      moves = 2
+      updateCounters(moves, shoots)
       goodSquad = teamOne.concat(teamTwo).filter(u => {return u.type == turn})
       enemySquad = teamOne.concat(teamTwo).filter(u => {return u.type != turn})
     }
