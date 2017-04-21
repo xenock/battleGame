@@ -64,8 +64,14 @@ function updateCounters(moves, shoots, remainingActions){
   $('.shoots').html('disparos restantes'+(shoots))
 }
 
+function animateShot(unit){
+  var cell = $('.x'+unit.position.x+'y'+unit.position.y)
+  cell.addClass('attack')
+  setTimeout(t => {cell.removeClass('attack')}, 500)
+}
+
 $(document).ready(function(){
-  var body = $('body')
+  var body = $('body>section')
   board = initialBoard(boardSize.width, boardSize.height)
   paintBoard(board, body)
 
@@ -95,6 +101,9 @@ $(document).ready(function(){
            && shoots>0){
           var enemy = enemySquad.find(u => {return u.name == actions[1].name})
           attackEnemy(unit, actions, enemy, enemySquad)
+
+          animateShot(unit)
+
           shoots -= 1
           remainingActions -= 1
           updateCounters(moves, shoots, remainingActions)
