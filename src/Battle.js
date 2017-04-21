@@ -52,10 +52,11 @@ function attackEnemy(unit, actions, enemy, enemySquad){
   }
 }
 
-function initializeCounters(body, moves, shoots, remainingActions){
-  body.append($('<div>').addClass('remaining').html('acciones restantes: '+(remainingActions)))
-  body.append($('<div>').addClass('moves').html('movimientos restantes: '+(moves)))
-  body.append($('<div>').addClass('shoots').html('disparos restantes: '+(shoots)))
+function initializeCounters(moves, shoots, remainingActions){
+  var actionBoard = $('.actionboard')
+  actionBoard.append($('<div>').addClass('remaining').html('acciones restantes: '+(remainingActions)))
+  actionBoard.append($('<div>').addClass('moves').html('movimientos restantes: '+(moves)))
+  actionBoard.append($('<div>').addClass('shoots').html('disparos restantes: '+(shoots)))
 }
 
 function updateCounters(moves, shoots, remainingActions){
@@ -77,7 +78,7 @@ function animateShot(unit, enemy){
 }
 
 $(document).ready(function(){
-  var body = $('body>section')
+  var body = $('body .board')
   board = initialBoard(boardSize.width, boardSize.height)
   paintBoard(board, body)
 
@@ -89,7 +90,7 @@ $(document).ready(function(){
 
   teamOne.forEach(unit => {putUnitInMap(unit)})
   teamTwo.forEach(unit => {putUnitInMap(unit)})
-  initializeCounters(body, moves, shoots, remainingActions)
+  initializeCounters(moves, shoots, remainingActions)
 
   var cell = $('.cell')
   cell.on('click', function(c){
