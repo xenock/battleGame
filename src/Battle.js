@@ -69,6 +69,7 @@ function animateShot(unit, enemy){
   var enemyCell = $('.x'+enemy.position.x+'y'+enemy.position.y)
   unitCell.addClass('attack')
   enemyCell.addClass('spin')
+  document.getElementById('mix').play()
   setTimeout(t => {
     unitCell.removeClass('attack')
     enemyCell.removeClass('spin')
