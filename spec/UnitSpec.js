@@ -12,27 +12,6 @@ describe('Unit', function(){
     unit = new Unit(health, power, defense, position, movement, range)
   })
 
-  describe('Functions', function(){
-    it('should have a canAttack function', function(){
-      expect(typeof(unit.canAttack)).toBe('function')
-    })
-    it('should have an attack function', function(){
-      expect(typeof(unit.attack)).toBe('function')
-    })
-    it('should have a receive damage function', function(){
-      expect(typeof(unit.receiveDamage)).toBe('function')
-    })
-    it('should have a isDead function', function(){
-      expect(typeof(unit.isDead)).toBe('function')
-    })
-    it('should have a movement function', function(){
-      expect(typeof(unit.canMove)).toBe('function')
-    })
-    it('should have a move function', function(){
-      expect(typeof(unit.move)).toBe('function')
-    })
-  })
-
   describe('Functions behaviour', function(){
     describe('canAttack', function(){
       it('should permit to attack less or equal than its range', function(){
