@@ -1,9 +1,6 @@
-var board
 var teamSize = 4
-var boardSize = {
-  width: 10,
-  height: 10
-}
+var board = new Board(10, 10)
+
 var teamOne = new Array(teamSize)
 var teamTwo = new Array(teamSize)
 for(var i=0; i<teamSize; i++){
@@ -11,11 +8,8 @@ for(var i=0; i<teamSize; i++){
   teamTwo.push(new Unit(10, 10, 5, {x: 9, y: i+2}, 2, 2,'team_two', 'soldier'+i))
 }
 
-function initialBoard(width, height){
-  return Array.apply(null, Array(width)).map(e => Array(height))
-}
 function paintBoard(board, body){
-  board.forEach(function(rowArray, y){
+  board.grid.forEach(function(rowArray, y){
     var row = $('<div>').addClass('row')
     for(var x=0; x<rowArray.length; x++){
       var column = $('<div>').addClass('cell x'+x+'y'+y).data({x:x, y:y})
@@ -79,7 +73,6 @@ function animateShot(unit, enemy){
 
 $(document).ready(function(){
   var body = $('body .board')
-  board = initialBoard(boardSize.width, boardSize.height)
   paintBoard(board, body)
 
   var actions = []
