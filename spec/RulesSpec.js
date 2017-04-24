@@ -9,7 +9,7 @@ describe('Rules', function(){
   })
   describe('Functions behaviour', function(){
     it('should substract one move to remainingMoves', function(){
-      expect(rules.move() == this.totalMoves-1).toBe(true))
+      expect(rules.move()).toEqual(rules.totalMoves-1)
     })
   })
 })
