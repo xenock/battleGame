@@ -1,4 +1,5 @@
 describe('Board', function(){
+  var board
   var width, height, grid
 
   beforeEach(function(){
