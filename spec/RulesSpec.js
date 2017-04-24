@@ -8,11 +8,15 @@ describe('Rules', function(){
     rules = new Rules(totalMoves, totalAttacks)
   })
   describe('Functions behaviour', function(){
-    it('should substract one move to remainingMoves', function(){
-      expect(rules.move()).toEqual(rules.totalMoves-1)
+    describe('move', function(){
+      it('should substract one move to remainingMoves', function(){
+        expect(rules.move()).toEqual(rules.totalMoves-1)
+      })
     })
-    it('should substract one attack to remainingAttack', function(){
-      expect(rules.attack()).toEqual(rules.totalAttacks-1)
+    describe('attack', function(){
+      it('should substract one attack to remainingAttack', function(){
+        expect(rules.attack()).toEqual(rules.totalAttacks-1)
+      })
     })
   })
 })
