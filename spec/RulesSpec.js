@@ -18,5 +18,15 @@ describe('Rules', function(){
         expect(rules.attack()).toEqual(rules.totalAttacks-1)
       })
     })
+    describe('restartActions', function(){
+      it('should restart remainingMoves', function(){
+        rules.restartActions()
+        expect(rules.remainingMoves).toEqual(rules.remainingMoves)
+      })
+      it('should restart remainingAttacks', function(){
+        rules.restartActions()
+        expect(rules.remainingAttacks).toEqual(rules.remainingAttacks)
+      })
+    })
   })
 })

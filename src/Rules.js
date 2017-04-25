@@ -12,3 +12,8 @@ Rules.prototype.move = function(){
 Rules.prototype.attack = function(){
   return this.remainingAttacks -= 1
 }
+
+Rules.prototype.restartActions = function(){
+  this.remainingMoves = this.totalMoves
+  this.remainingAttacks = this.totalAttacks
+}
