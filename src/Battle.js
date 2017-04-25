@@ -1,5 +1,6 @@
 var teamSize = 4
 var board = new Board(10, 10)
+var rules = new Rules(2, 2)
 
 var teamOne = new Array(teamSize)
 var teamTwo = new Array(teamSize)
@@ -46,15 +47,13 @@ function attackEnemy(unit, actions, enemy, enemySquad){
   }
 }
 
-function initializeCounters(moves, shoots, remainingActions){
+function initializeCounters(moves, shoots){
   var actionBoard = $('.actionboard')
-  actionBoard.append($('<div>').addClass('remaining').html('acciones restantes: '+(remainingActions)))
   actionBoard.append($('<div>').addClass('moves').html('movimientos restantes: '+(moves)))
   actionBoard.append($('<div>').addClass('shoots').html('disparos restantes: '+(shoots)))
 }
 
-function updateCounters(moves, shoots, remainingActions){
-  $('.remaining').html('acciones restantes'+(remainingActions))
+function updateCounters(moves, shoots){
   $('.moves').html('movimientos restantes'+(moves))
   $('.shoots').html('disparos restantes'+(shoots))
 }
@@ -76,20 +75,18 @@ $(document).ready(function(){
   paintBoard(board, body)
 
   var actions = []
-  var moves = 2, shoots = 2, remainingActions = 2
   var turn = 'team_one'
   var goodSquad = teamOne.concat(teamTwo).filter(u => {return u.type == turn})
   var enemySquad = teamOne.concat(teamTwo).filter(u => {return u.type != turn})
 
   teamOne.forEach(unit => {putUnitInMap(unit)})
   teamTwo.forEach(unit => {putUnitInMap(unit)})
-  initializeCounters(moves, shoots, remainingActions)
+  initializeCounters(rules.totalMoves, rules.totalAttacks)
 
   var cell = $('.cell')
   cell.on('click', function(c){
     var selectedCell = $(this).data()
     actions.push(selectedCell)
-    // console.log(selectedCell)
 
     if(actions.length == 2){
       if(actions[0].type == turn && actions[1]){
@@ -98,22 +95,18 @@ $(document).ready(function(){
         if(actions[0].type == turn
            && actions[1].type != turn
            && actions[1].type != undefined
-           && shoots>0){
+           && rules.remainingAttacks>0){
           var enemy = enemySquad.find(u => {return u.name == actions[1].name})
           attackEnemy(unit, actions, enemy, enemySquad)
-
           animateShot(unit, enemy)
-
-          shoots -= 1
-          remainingActions -= 1
-          updateCounters(moves, shoots, remainingActions)
+          rules.attack()
+          updateCounters(rules.remainingMoves, rules.remainingAttacks)
           actions = []
         } else if(unit.canMove(actions[1].x, actions[1].y)
                   && actions[1].type == undefined){
           moveUnit(unit, actions)
-          moves -= 1
-          remainingActions -= 1
-          updateCounters(moves, shoots, remainingActions)
+          rules.move()
+          updateCounters(rules.remainingMoves, rules.remainingAttacks)
           actions = []
         }
       }
@@ -123,12 +116,10 @@ $(document).ready(function(){
         console.log('todo muertos!')
       }
     }
-    if(shoots==0 || moves==0){
+    if(rules.remainingMoves==0 || rules.remainingAttacks==0){
       turn = (turn=='team_one')?turn='team_two':turn='team_one'
-      shoots = 2
-      moves = 2
-      remainingActions = 2
-      updateCounters(moves, shoots, remainingActions)
+      rules.restartActions()
+      updateCounters(rules.remainingMoves, rules.remainingAttacks)
       goodSquad = teamOne.concat(teamTwo).filter(u => {return u.type == turn})
       enemySquad = teamOne.concat(teamTwo).filter(u => {return u.type != turn})
     }
