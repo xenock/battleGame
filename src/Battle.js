@@ -32,6 +32,7 @@ function removeLastPosition(unit){
 
 function moveUnit(unit, actions){
   removeLastPosition(unit)
+  // console.log(actions);
   unit.move(actions[1].x, actions[1].y)
   putUnitInMap(unit)
 }
@@ -74,10 +75,8 @@ $(document).ready(function(){
   var body = $('body .board')
   paintBoard(board, body)
 
-  var actions = []
-  var turn = 'team_one'
-  var goodSquad = teamOne.concat(teamTwo).filter(u => {return u.type == turn})
-  var enemySquad = teamOne.concat(teamTwo).filter(u => {return u.type != turn})
+  var goodSquad = teamOne.concat(teamTwo).filter(u => {return u.type == rules.turn})
+  var enemySquad = teamOne.concat(teamTwo).filter(u => {return u.type != rules.turn})
 
   teamOne.forEach(unit => {putUnitInMap(unit)})
   teamTwo.forEach(unit => {putUnitInMap(unit)})
@@ -86,42 +85,40 @@ $(document).ready(function(){
   var cell = $('.cell')
   cell.on('click', function(c){
     var selectedCell = $(this).data()
-    actions.push(selectedCell)
+    rules.addClickedCell(selectedCell)
 
-    if(actions.length == 2){
-      if(actions[0].type == turn && actions[1]){
-        var unit = goodSquad.find(u => {return u.name == actions[0].name})
+    if(rules.hasTwoActions()){
+      if(rules.validPlayerAction()){
+        var unit = goodSquad.find(u => {return u.name == rules.attackingUnitName()})
 
-        if(actions[0].type == turn
-           && actions[1].type != turn
-           && actions[1].type != undefined
-           && rules.remainingAttacks>0){
-          var enemy = enemySquad.find(u => {return u.name == actions[1].name})
-          attackEnemy(unit, actions, enemy, enemySquad)
+        if(rules.isValidAttack()){
+          var enemy = enemySquad.find(u => {return u.name == rules.attackedUnitName()})
+          // console.log('enemigo' + enemy);
+          attackEnemy(unit, rules.actions, enemy, enemySquad)
           animateShot(unit, enemy)
           rules.attack()
           updateCounters(rules.remainingMoves, rules.remainingAttacks)
-          actions = []
-        } else if(unit.canMove(actions[1].x, actions[1].y)
-                  && actions[1].type == undefined){
-          moveUnit(unit, actions)
+          rules.cleanActions()
+        } else if(unit.canMove(rules.actions[1].x, rules.actions[1].y)
+                  && rules.secondActionIsNotAUnit()){
+          moveUnit(unit, rules.actions)
           rules.move()
           updateCounters(rules.remainingMoves, rules.remainingAttacks)
-          actions = []
+          rules.cleanActions()
         }
       }
-      actions.shift()
+      rules.actions.shift()
       console.log(enemySquad.length)
       if(enemySquad.length==0){
         console.log('todo muertos!')
       }
     }
     if(rules.remainingMoves==0 || rules.remainingAttacks==0){
-      turn = (turn=='team_one')?turn='team_two':turn='team_one'
+      rules.turn = (rules.turn=='team_one')?rules.turn='team_two':rules.turn='team_one'
       rules.restartActions()
       updateCounters(rules.remainingMoves, rules.remainingAttacks)
-      goodSquad = teamOne.concat(teamTwo).filter(u => {return u.type == turn})
-      enemySquad = teamOne.concat(teamTwo).filter(u => {return u.type != turn})
+      goodSquad = teamOne.concat(teamTwo).filter(u => {return u.type == rules.turn})
+      enemySquad = teamOne.concat(teamTwo).filter(u => {return u.type != rules.turn})
     }
   })
 })
