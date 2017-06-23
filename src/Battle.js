@@ -114,7 +114,7 @@ $(document).ready(function(){
       }
     }
     if(rules.remainingMoves==0 || rules.remainingAttacks==0){
-      rules.turn = (rules.turn=='team_one')?rules.turn='team_two':rules.turn='team_one'
+      rules.changeTurn()
       rules.restartActions()
       updateCounters(rules.remainingMoves, rules.remainingAttacks)
       goodSquad = teamOne.concat(teamTwo).filter(u => {return u.type == rules.turn})

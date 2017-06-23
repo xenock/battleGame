@@ -73,3 +73,7 @@ Rules.prototype.isValidAttack = function(){
 Rules.prototype.secondActionIsNotAUnit = function(){
   return this.actions[1].type == undefined
 }
+
+Rules.prototype.changeTurn = function(){
+  this.turn = (this.turn=='team_one')?this.turn='team_two':this.turn='team_one'
+}

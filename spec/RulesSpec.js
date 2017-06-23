@@ -120,5 +120,12 @@ describe('Rules', function(){
         expect(rules.secondActionIsNotAUnit()).toBe(true)
       })
     })
+    describe('changeTurn', function(){
+      it('should change turn name', function(){
+        rules.turn = 'team_one'
+        rules.changeTurn()
+        expect(rules.turn).toEqual('team_two')
+      })
+    })
   })
 })
